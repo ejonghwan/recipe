@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.js": "/github.io/baset1/static/js/main.e9958564.chunk.js",
-    "main.js.map": "/github.io/baset1/static/js/main.e9958564.chunk.js.map",
-    "runtime-main.js": "/github.io/baset1/static/js/runtime-main.1d712c97.js",
-    "runtime-main.js.map": "/github.io/baset1/static/js/runtime-main.1d712c97.js.map",
-    "static/js/2.7b5ff9e3.chunk.js": "/github.io/baset1/static/js/2.7b5ff9e3.chunk.js",
-    "static/js/2.7b5ff9e3.chunk.js.map": "/github.io/baset1/static/js/2.7b5ff9e3.chunk.js.map",
-    "index.html": "/github.io/baset1/index.html",
-    "static/js/2.7b5ff9e3.chunk.js.LICENSE.txt": "/github.io/baset1/static/js/2.7b5ff9e3.chunk.js.LICENSE.txt"
+    "main.js": "/baset1/static/js/main.e9958564.chunk.js",
+    "main.js.map": "/baset1/static/js/main.e9958564.chunk.js.map",
+    "runtime-main.js": "/baset1/static/js/runtime-main.03e35148.js",
+    "runtime-main.js.map": "/baset1/static/js/runtime-main.03e35148.js.map",
+    "static/js/2.6d4cbb37.chunk.js": "/baset1/static/js/2.6d4cbb37.chunk.js",
+    "static/js/2.6d4cbb37.chunk.js.map": "/baset1/static/js/2.6d4cbb37.chunk.js.map",
+    "index.html": "/baset1/index.html",
+    "static/js/2.6d4cbb37.chunk.js.LICENSE.txt": "/baset1/static/js/2.6d4cbb37.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.1d712c97.js",
-    "static/js/2.7b5ff9e3.chunk.js",
+    "static/js/runtime-main.03e35148.js",
+    "static/js/2.6d4cbb37.chunk.js",
     "static/js/main.e9958564.chunk.js"
   ]
 }
