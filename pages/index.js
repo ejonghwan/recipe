@@ -25,7 +25,23 @@ export default function Home({ meals }) {
 			</Head>
 
 			<main className={clsx(styles.main)}>
-				<Title url={'/abc'} className={styles.txt}>
+				{/* <Title
+					url={'/abc'}
+					className={styles.txt}			
+					type={'logo'}
+				>
+					Hello
+				</Title>
+
+				<Title type={'slogan'} tag={'h2'}>
+					Slogan
+				</Title> */}
+				<Title
+					tag={'h3'}
+					url={'/abc'}
+					type={'slogan'}
+					style={{ color: 'aqua', hoverColor: 'hotpink' }}
+				>
 					Hello
 				</Title>
 			</main>
