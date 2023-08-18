@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import Header from '../organisms/Header';
+import Header from '../../organisms/Header/Header';
 import styles from './Layout.module.scss';
 import clsx from 'clsx';
 
@@ -17,9 +17,10 @@ function Layout({ children }) {
 				/>
 				<link rel='icon' href='/favicon.ico' />
 			</Head>
-			<main className={clsx(styles.main)}>
+			<main className={clsx(styles.layout)}>
 				<Header />
-				{children}
+
+				<section className={clsx(styles.content)}>{children}</section>
 			</main>
 		</>
 	);
