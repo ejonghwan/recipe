@@ -1,46 +1,40 @@
 import Head from 'next/head';
-import axios from 'axios';
 import styles from './style.module.scss';
+import axios from 'axios';
+import Category from '@/components/molecules/Category/Category';
+import { useRecipeByCategory } from '@/hooks/useRecipe';
+import { useEffect, useState } from 'react';
 
-export default function Recipe({ data, categories }) {
+export default function Recipe({ categories }) {
+	// console.log(categories);
 
-	console.log(data, categories)
-
+	const [Select, setSelect] = useState('Beef');
+	const { data, isSuccess } = useRecipeByCategory(Select)
+	
+	
+	useEffect(() => {
+		console.log(Select)
+		console.log(data)
+	}, [Select, data])
+	
 	return (
 		<>
 			<Head>
 				<title>Recipe Page</title>
 			</Head>
 
-			<div className={styles.box}>
-				{categories.meals.map(item => (
-					<div key={item.idMeal}>
-						{item.strMeal}
-					</div>
-				))}
-			</div>
+			<section className={styles.recipePage}>
+				<Category items={categories} setSelect={setSelect}/>
+				{data?.map(item => <div key={item.idMeal}>{item.strMeal}</div>)}
+			</section>
 		</>
 	);
 }
 
-
 export async function getStaticProps() {
-	const list = [];
-	const { data: obj } = await axios.get('/categories.php');
-
-	console.log(obj)
-
-	const items = obj.categories;
-	items.forEach((el) => list.push(el.strCategory));
-	const newList = list.filter((el) => el !== 'Goat' && el !== 'Vegan' && el !== 'Starter');
-
-	const randomNum = Math.floor(Math.random() * newList.length);
-	const { data } = await axios.get(`/filter.php?c=${newList[randomNum]}`);
+	const { data } = await axios.get('/categories.php');
 
 	return {
-		props: { categories: data }
-		// props: { ...data, category: newList[randomNum] },
-		// revalidate: 60 * 60 * 24,
+		props: { categories: data.categories },
 	};
 }
-
