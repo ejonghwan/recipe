@@ -10,7 +10,7 @@ export const useRecipeByCategory = (SelectedCategory) => {
 	return useQuery(['RecipeByCategory', SelectedCategory], getRecipeByCategory, {
 		refetchOnMount: false,
 		refetchOnWindowFocus: false,
-		cacheTime: 0,
+		cacheTime: 1000 * 60 * 60 * 24, //캐싱타임 24시간. 자주 바뀌지 않는 데이터는 길게줌. 게시판같은건 0
 		staleTime: 0,
 		retry: 3, //데이터 요청 시도 횟수(디폴트3, 네트워트상황이 안좋을때 재시도횟수 늘림)
 		//enabled값에는 truthy, falsy값이 적용안됨 (직접 boolean값을 생성해서 지정)
