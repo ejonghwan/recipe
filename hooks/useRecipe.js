@@ -6,8 +6,8 @@ const getRecipeByCategory = async ({ queryKey }) => {
 	return data?.meals || [];
 };
 
-export const useRecipeByCategory = (SelectedCategory) => {
-	return useQuery(['RecipeByCategory', SelectedCategory], getRecipeByCategory, {
+export const useRecipeByCategory = (DebouncedCategory, DebouncedSearch) => {
+	return useQuery(['RecipeByCategory', DebouncedCategory], getRecipeByCategory, {
 		refetchOnMount: false,
 		refetchOnWindowFocus: false,
 		cacheTime: 1000 * 60 * 60 * 24, //캐싱타임 24시간. 자주 바뀌지 않는 데이터는 길게줌. 게시판같은건 0
@@ -16,7 +16,23 @@ export const useRecipeByCategory = (SelectedCategory) => {
 		//enabled값에는 truthy, falsy값이 적용안됨 (직접 boolean값을 생성해서 지정)
 		//지금 상황에서는 SSG방식으로 초기 데이터를 호출하고 있기 때문에 아래 구문을 지정안해도 잘 동작됨
 		//CSR방식으로 호출할떄에는 초기값이 undefined이기 때문에 발생하는 에러를 미리 방지
-		enabled: SelectedCategory !== undefined, //useQuery의 호출 유무 true(실행, 디폴트값) false(실행안함)
+		enabled: DebouncedCategory !== undefined || DebouncedSearch === '', //useQuery의 호출 유무 true(실행, 디폴트값) false(실행안함)
+	});
+};
+
+
+const getRecipeBySearch = async ({ queryKey }) => {
+	const { data } = await axios.get(`/search.php?s=${queryKey[1]}`);
+	return data?.meals || [];
+};
+
+export const useRecipeBySearch = (DebouncedSearch) => {
+	return useQuery(['RecipeBySearch', DebouncedSearch], getRecipeBySearch, {
+		refetchOnMount: false,
+		refetchOnWindowFocus: false,
+		cacheTime: 1000 * 60 * 60 * 24,
+		staleTime: 1000 * 60 * 60 * 24,
+		enabled: DebouncedSearch !== '',
 	});
 };
 
