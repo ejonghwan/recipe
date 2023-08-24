@@ -24,6 +24,8 @@ export const useRecipeByCategory = (SelectedCategory) => {
 
 /*
 
+###### 중요 이슈
+
    ** 프로덕션 모드에서 프레이머 이슈 (이건 리액트에서 코드스플리팅하면 같은 현상 발생할듯 ? )
    SSG ISR
    넥스트는 프로덕션 모드에서 코드스플리팅을 해서 프리로드를 하는데 마우스오버했을때 json데이터를 불러옴 
