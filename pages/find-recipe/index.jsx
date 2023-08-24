@@ -47,7 +47,7 @@ export default function Recipe({ categories }) {
 				
 
 				<Title type={'slogan'} className={clsx(styles.titCategory)}>
-					{DebouncedSelected ? DebouncedSelected : Search}
+					{DebouncedSelected ? DebouncedSelected : DebouncedSearch}
 				</Title>
 
 
