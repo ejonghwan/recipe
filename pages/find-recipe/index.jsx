@@ -9,6 +9,7 @@ import Card from '@/components/molecules/Card/Card';
 import { Title } from '@/components/atoms/text/Title';
 import clsx from 'clsx';
 import SearchBar from '@/components/molecules/SearchBar/SearchBar';
+import { Text } from '@/components/atoms/text/Text';
 
 export default function Recipe({ categories }) {
 	const [Selected, setSelected] = useState(categories[0].strCategory);
@@ -17,13 +18,17 @@ export default function Recipe({ categories }) {
 	const DebouncedSelected = useDebounce(Selected);
 	const DebouncedSearch = useDebounce(Search);
 	const { data: dataByCategory, isSuccess: isCategory } = useRecipeByCategory(DebouncedSelected, DebouncedSearch);
-	const { data: dataBySearch, isSuccess: isSearch } = useRecipeBySearch(DebouncedSearch);
+	const { data: dataBySearch, isSuccess: isSearch,  } = useRecipeBySearch(DebouncedSearch);
 
 	const handleTest = category => {
 		console.log(category)
 		setSearch('')
 		setSelected(category)
 	}
+
+	useEffect(() => {
+		console.log(dataBySearch)
+	}, [dataBySearch])
 
 	useEffect(() => {
 		if(DebouncedSearch) {
@@ -44,12 +49,9 @@ export default function Recipe({ categories }) {
 				{/* 버튼활성화 순서1- category로 활성화여부를 구분할수 있는 정보값을 active라는 props로 전달 */}
 				<Category items={categories} onClick={handleTest} active={DebouncedSelected} />
 
-				
-
 				<Title type={'slogan'} className={clsx(styles.titCategory)}>
-					{DebouncedSelected ? DebouncedSelected : DebouncedSearch}
+					검색어 {DebouncedSelected ? DebouncedSelected : DebouncedSearch}
 				</Title>
-
 
 				<SearchBar inputType={'text'} isBtn={false} placeholder={'search'} value={Search} onChange={e => setSearch(e.target.value)}/>
 
@@ -75,6 +77,11 @@ export default function Recipe({ categories }) {
 								className={clsx(styles.card)}
 							/>
 						))}
+
+					{/* 카테고리 없고 서치 있고 서치배열 0일때 */}
+					{ isSearch && dataBySearch.length === 0 &&  
+						<Text>검색 결과가 없습니다.</Text>
+					} 
 				</div>
 			</section>
 		</>

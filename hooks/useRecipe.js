@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 
+// 레시피 카테고리 클릭
 const getRecipeByCategory = async ({ queryKey }) => {
 	const { data } = await axios.get(`/filter.php?c=${queryKey[1]}`);
 	return data?.meals || [];
@@ -20,7 +21,7 @@ export const useRecipeByCategory = (DebouncedCategory, DebouncedSearch) => {
 	});
 };
 
-
+// 레시피 검색
 const getRecipeBySearch = async ({ queryKey }) => {
 	const { data } = await axios.get(`/search.php?s=${queryKey[1]}`);
 	return data?.meals || [];
@@ -33,6 +34,22 @@ export const useRecipeBySearch = (DebouncedSearch) => {
 		cacheTime: 1000 * 60 * 60 * 24,
 		staleTime: 1000 * 60 * 60 * 24,
 		enabled: DebouncedSearch !== '',
+	});
+};
+
+
+// 레시피 디테일 페이지 요청
+const getRecipeById = async ({ queryKey }) => {
+	const { data } = await axios.get(`/lookup.php?i=${queryKey[1]}`);
+	return data?.meals[0] || [];
+};
+
+export const useRecipeById = (recipeId) => {
+	return useQuery(['RecipeById', recipeId], getRecipeById, {
+		refetchOnMount: false,
+		refetchOnWindowFocus: false,
+		cacheTime: 1000 * 60 * 60 * 24,
+		staleTime: 1000 * 60 * 60 * 24,
 	});
 };
 
