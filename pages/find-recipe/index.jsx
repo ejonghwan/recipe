@@ -3,7 +3,7 @@ import styles from './style.module.scss';
 import axios from 'axios';
 import Category from '@/components/molecules/Category/Category';
 import { useRecipeByCategory, useRecipeBySearch } from '@/hooks/useRecipe';
-import { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useDebounce } from '@/hooks/useDebounce';
 import Card from '@/components/molecules/Card/Card';
 import { Title } from '@/components/atoms/text/Title';
@@ -17,27 +17,23 @@ export default function Recipe({ categories }) {
 
 	const DebouncedSelected = useDebounce(Selected);
 	const DebouncedSearch = useDebounce(Search);
+
 	const { data: dataByCategory, isSuccess: isCategory } = useRecipeByCategory(DebouncedSelected, DebouncedSearch);
-	const { data: dataBySearch, isSuccess: isSearch,  } = useRecipeBySearch(DebouncedSearch);
+	const { data: dataBySearch, isSuccess: isSearch } = useRecipeBySearch(DebouncedSearch);
 
-	const handleTest = category => {
-		console.log(category)
-		setSearch('')
-		setSelected(category)
-	}
-
-	useEffect(() => {
-		console.log(dataBySearch)
-	}, [dataBySearch])
+	const handleClickCategory = (state) => {
+		setSearch('');
+		setSelected(state);
+	};
 
 	useEffect(() => {
-		if(DebouncedSearch) {
+		if (DebouncedSearch) {
 			setSelected('');
 		} else {
 			setSearch('');
-			!DebouncedSelected && setSelected(categories[0].strCategory)
+			!DebouncedSelected && setSelected(categories[0].strCategory);
 		}
-	}, [DebouncedSearch, DebouncedSelected])
+	}, [DebouncedSearch, DebouncedSelected, categories]);
 
 	return (
 		<>
@@ -46,42 +42,32 @@ export default function Recipe({ categories }) {
 			</Head>
 
 			<section className={styles.recipePage}>
-				{/* 버튼활성화 순서1- category로 활성화여부를 구분할수 있는 정보값을 active라는 props로 전달 */}
-				<Category items={categories} onClick={handleTest} active={DebouncedSelected} />
+				<Category items={categories} onClick={handleClickCategory} active={DebouncedSelected} className={clsx(styles.category)} />
 
-				<Title type={'slogan'} className={clsx(styles.titCategory)}>
-					검색어 {DebouncedSelected ? DebouncedSelected : DebouncedSearch}
-				</Title>
+				<article className={clsx(styles.titBox)}>
+					<Title type={'slogan'} className={clsx(styles.titCategory)} style={{ color: '#bbb', hoverColor: '#bbb' }}>
+						{DebouncedSelected ? DebouncedSelected : `Result: ${DebouncedSearch}`}
+					</Title>
 
-				<SearchBar inputType={'text'} isBtn={false} placeholder={'search'} value={Search} onChange={e => setSearch(e.target.value)}/>
-
+					<SearchBar inputType={'text'} isBtn={false} placeholder={'search'} value={Search} onChange={setSearch} />
+				</article>
 
 				<div className={clsx(styles.listFrame)}>
-					{isSearch && 
-						dataBySearch.map((el) => (
-							<Card
-								key={el.idMeal}
-								imgSrc={el.strMealThumb}
-								url={`/find-recipe/${el.idMeal}`}
-								txt={el.strMeal}
-								className={clsx(styles.card)}
-							/>
-						))}
-					{isCategory && 
+					{isCategory &&
 						dataByCategory.map((el) => (
-							<Card
-								key={el.idMeal}
-								imgSrc={el.strMealThumb}
-								url={`/find-recipe/${el.idMeal}`}
-								txt={el.strMeal}
-								className={clsx(styles.card)}
-							/>
+							<Card key={el.idMeal} imgSrc={el.strMealThumb} url={`/find-recipe/${el.idMeal}`} txt={`${el.strMeal}`} className={clsx(styles.card)} />
 						))}
 
-					{/* 카테고리 없고 서치 있고 서치배열 0일때 */}
-					{ isSearch && dataBySearch.length === 0 &&  
-						<Text>검색 결과가 없습니다.</Text>
-					} 
+					{isSearch &&
+						dataBySearch.map((el) => (
+							<Card key={el.idMeal} imgSrc={el.strMealThumb} url={`/find-recipe/${el.idMeal}`} txt={`${el.strMeal}`} className={clsx(styles.card)} />
+						))}
+
+					{isSearch && dataBySearch.length === 0 && (
+						<Text style={{ fontSize: 22, marginTop: 80, color: 'orange' }}>
+							No Results!! <br /> Try another Recipe Name.
+						</Text>
+					)}
 				</div>
 			</section>
 		</>

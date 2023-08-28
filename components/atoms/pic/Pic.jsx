@@ -2,7 +2,7 @@ import Image from 'next/image';
 import clsx from 'clsx';
 import styles from './Pic.module.scss';
 import Link from 'next/link';
-import { BarLoader } from 'react-spinners';
+import { HashLoader } from 'react-spinners';
 import { useState } from 'react';
 
 export function Pic({ imgSrc, style, imgTxt, children, className, priority = false, url }) {
@@ -38,10 +38,10 @@ export function Pic({ imgSrc, style, imgTxt, children, className, priority = fal
 				</>
 			)}
 
-			<BarLoader
+			<HashLoader
 				cssOverride={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}
-				size={30}
-				color={'aqua'}
+				size={50}
+				color={'orange'}
 				loading={!IsLoaded}
 			/>
 		</div>

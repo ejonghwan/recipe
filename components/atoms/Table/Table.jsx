@@ -1,4 +1,3 @@
-import { Fragment } from 'react';
 import { Title } from '../text/Title';
 import styles from './Table.module.scss';
 import clsx from 'clsx';
@@ -14,14 +13,14 @@ import clsx from 'clsx';
 
 export function Table({ data, title }) {
 	if (data.length === 0) return;
-	console.log(data[0]);
 	return (
-		<Fragment>
-			{title && <Title>Title</Title>}
+		<>
+			{title && <Title>{title}</Title>}
 
 			<table className={clsx(styles.table)}>
 				<thead>
 					<tr>
+						{/* 첫번째 배열의 키값만 반복을 돌면서 제목줄 출력 */}
 						{Object.keys(data[0]).map((key) => (
 							<th key={key}>{key}</th>
 						))}
@@ -37,6 +36,6 @@ export function Table({ data, title }) {
 					))}
 				</tbody>
 			</table>
-		</Fragment>
+		</>
 	);
 }
