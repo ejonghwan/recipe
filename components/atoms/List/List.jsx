@@ -1,8 +1,7 @@
-import React from 'react';
 import styles from './List.module.scss';
 import clsx from 'clsx';
 import Link from 'next/link';
-
+import React from 'react';
 
 //React.createElement(요소명, {className, style, href}, React.createElemet():map으로 반복처리 가능)
 

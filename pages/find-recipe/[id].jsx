@@ -3,24 +3,66 @@ import { Title } from '@/components/atoms/text/Title';
 import { useRecipeById } from '@/hooks/useRecipe';
 import { useRouter } from 'next/router';
 import clsx from 'clsx';
+import styles from './detail.module.scss';
 import { BounceLoader } from 'react-spinners';
 import { Table } from '@/components/atoms/Table/Table';
 import { useState, useEffect } from 'react';
 import List from '@/components/atoms/List/List';
+import Btn from '@/components/atoms/Button/Btn';
+import { Text } from '@/components/atoms/text/Text';
 
 function Detail() {
 	const router = useRouter();
 	const { id } = router.query;
 	const { data } = useRecipeById(id);
 	const [TableData, setTableData] = useState([]);
-	const [ListData, setListData] = useState([])
+	const [ListData, setListData] = useState([]);
+	const [Saved, setSaved] = useState(false);
 
-	//무한루프에 빠지지 않게 하기위해서 해당 해당 컴포넌트에서 data가 받아졌을떄 한번한 호출해서 State에 옮겨담기
+	//버튼 클릭할때마다 해당 recipeId를 저장, 삭제해주는 토글함수
+	const handleSave = () => {
+		const savedRecipe = JSON.parse(localStorage.getItem('savedRecipe'));
+
+		if (!Saved) {
+			savedRecipe.push(data.idMeal);
+			localStorage.setItem('savedRecipe', JSON.stringify(savedRecipe));
+			setSaved(true);
+		} else {
+			//배열.splice('자를요소의 순번','갯수')
+			//해당페이지의 레시피아이디값의 배열의 순번을 구한다음 해당 순번의 배열값 하나만 제거
+			savedRecipe.splice(savedRecipe.indexOf(data.idMeal), 1);
+			localStorage.setItem('savedRecipe', JSON.stringify(savedRecipe));
+			setSaved(false);
+		}
+	};
+
+	//router로 들어오는 id값이 변경될때마다 실행되는 useEffect
+	useEffect(() => {
+		//로컬저장소에 savedRecipe이름으로 특정 값이 있기만 하면실행
+		if (localStorage.getItem('savedRecipe')) {
+			//해당 데이터를 배열로 파싱해서 가져옴
+			const savedRecipe = JSON.parse(localStorage.getItem('savedRecipe'));
+
+			//가져온배열값에서 router들어온 id값이 있는지 확인
+			if (savedRecipe.includes(id)) {
+				setSaved(true);
+				//로컬저장소에 값은 있지만 현재 라우터로 받은 레시피 정보값은 없는 경우
+			} else {
+				setSaved(false);
+			}
+			//아예 로컬저장소 자체가 없으면 그냥 빈배열값으로 저장소 생성
+		} else {
+			localStorage.setItem('savedRecipe', JSON.stringify([]));
+		}
+	}, [id]);
+
 	useEffect(() => {
 		if (data) {
-			const keys = Object.keys(data); //키만 뽑고 
+			const keys = Object.keys(data);
 			const filterKeys1 = keys.filter((key) => key.startsWith('strIngredient'));
-			const filterKeys2 = filterKeys1.filter((key) => data[key] !== '' && data[key] !== null);
+			const filterKeys2 = filterKeys1.filter(
+				(key) => data[key] !== '' && data[key] !== null
+			);
 			const ingredients = filterKeys2.map((key, idx) => ({
 				index: idx + 1,
 				ingredient: data[key],
@@ -28,32 +70,48 @@ function Detail() {
 			}));
 			setTableData(ingredients);
 
-			let intructions = data.strInstructions.split('.').map(text => text.trim().replace('\r\n', '') + '.').filter(text => text !== '.')
-			setListData(intructions)
+			let instructions = data.strInstructions
+				.split('\r\n')
+				.map((text) =>
+					text.includes('.\t') ? text.replace('.\t', '+').split('+')[1] : text
+				)
+				.filter((text) => text !== '');
+
+			setListData(instructions);
 		}
 	}, [data]);
 
 	return (
-		<section className='detail'>
+		<section className={clsx(styles.detail)}>
 			<BounceLoader
 				loading={!data}
-				cssOverride={{ position: 'absolute', top: 300, left: '50%', transform: 'translateX(-50%)' }}
+				cssOverride={{
+					position: 'absolute',
+					top: 300,
+					left: '50%',
+					transform: 'translateX(-50%)',
+				}}
 				color={'orange'}
 				size={100}
 			/>
 			{data && (
-				//다이나믹 라우터에서 스타일이 날라가는것이 아닌 csr방식에서 컴포넌트 언마운트시 데이터가 사라져서
-				//컨텐츠가 출력이 안되던 문제
-				//해결방법 data가 없을때는 로딩바를 대신 출력
-				//isSuccess는 처음 fetching이후 계속 true값이므로 활용불가
 				<>
 					<Title type={'slogan'}>{data.strMeal}</Title>
 
-					<div className='picFrame'>
+					<div className={clsx(styles.picFrame)}>
 						<Pic imgSrc={data.strMealThumb} />
 					</div>
+
+					{/* 버튼 클릭시 Saved값이 true일떄만 모듈sass로 del 클래스명을 붙이고 해당 고유 클래스명은 atom컴포넌트로 상속됨 : 결과적으로 해당 클래스명의 스타일이 atom컴포넌트의 기본 style을 덮어쓰기 */}
+					<Btn onClick={handleSave} className={clsx(Saved && styles.del)}>
+						{Saved ? 'Remove from my Favoraite' : 'Add to my Favorait'}
+					</Btn>
+					{Saved && (
+						<Text>You already added this recipe to your Favoraite.</Text>
+					)}
 					<Table data={TableData} title={data.strMeal} />
-					<List data={ListData} url={Array(14).fill()} tag={'ol'}/>
+
+					<List data={ListData} tag={'ol'} />
 				</>
 			)}
 		</section>
