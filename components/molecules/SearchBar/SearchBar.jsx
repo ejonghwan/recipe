@@ -1,7 +1,8 @@
 import styles from './SearchBar.module.scss';
 import clsx from 'clsx';
 import Btn from '@/components/atoms/Button/Btn';
-import Input from '@/components/atoms/form/Input';
+// import Input from '@/components/atoms/form/Input';
+import Input from '../../atoms/form/Input';
 import { FiSearch } from 'react-icons/fi';
 
 function SearchBar({ isBtn = true, btnText = 'button', inputType, value, onChange, placeholder }) {
