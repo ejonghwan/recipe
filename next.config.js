@@ -11,7 +11,7 @@ const nextConfig = {
 	},
 	compiler: { styledComponents: true },
 	compilerOptions: {
-		"baseUrl": "src",
+		// "baseUrl": "src",
 		"paths": {
 		  "@/components/*": ["components/*"]
 		}
