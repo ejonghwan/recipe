@@ -10,6 +10,12 @@ const nextConfig = {
 		domains: ['www.themealdb.com'],
 	},
 	compiler: { styledComponents: true },
+	compilerOptions: {
+		"baseUrl": "src",
+		"paths": {
+		  "@/components/*": ["components/*"]
+		}
+	  }
 };
 
 module.exports = nextConfig;
