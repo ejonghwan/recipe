@@ -4,7 +4,51 @@
 		height: 40vh;
 	}
 
+
 	.del {
 		color: red;
+		border: 1px solid red;
 	}
+
+	.saved_wrap {
+		text-align: right;
+		
+		.savedBtn {
+			border: 1px solid rgb(57, 57, 57);
+			text-align: right;
+			margin-left: auto;
+			margin-top: 20px;
+		}
+	}
+
+	
+
+
+	// .recipe_table_wrap {
+	// 	margin-top: 30px;
+	// }
+
+	.recipe_list_title {
+		font-size: 18px;
+		display: block;
+		margin-bottom: 10px;
+	}
+
+	.recipe_list_wrap {
+		margin-top: 50px;
+	}
+	.recipe_list_wrap li {
+		padding-left: 18px;
+    	text-indent: -18px;
+		color: #bbb;
+	}
+	.recipe_list_wrap li + li {
+		margin-top: 20px;
+	}
+	
+	
+
 }
+
+
+

@@ -2,7 +2,7 @@ import Image from 'next/image';
 import clsx from 'clsx';
 import styles from './Pic.module.scss';
 import Link from 'next/link';
-import { HashLoader } from 'react-spinners';
+import { BarLoader } from 'react-spinners';
 import { useState } from 'react';
 import { useThemeColor } from '@/hooks/useThemeColor';
 
@@ -48,7 +48,7 @@ export function Pic({
 				</>
 			)}
 
-			<HashLoader
+			<BarLoader
 				cssOverride={{
 					position: 'absolute',
 					top: '50%',

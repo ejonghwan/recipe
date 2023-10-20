@@ -35,6 +35,9 @@ function Favorait() {
 				>
 					My Favoraite Recipe
 				</Title>
+				{result.length === 0 && (
+					<div className={clsx(styles.no_data)}>No Data</div>
+				)}
 				{result &&
 					result.map(({ data, isSuccess }) => {
 						if (isSuccess) {

@@ -44,14 +44,14 @@ function Layout({ children }) {
 						initial={{ scaleX: 0 }}
 						animate={{ scaleX: 0 }}
 						exit={{ scaleX: 1 }}
-						transition={{ duration: 0.7, ease: [0.25, 0.1, 0.03, 0.99] }}
+						transition={{ duration: 0.5, ease: [0.25, 0.1, 0.03, 0.99] }}
 					></motion.div>
 					<motion.div
 						className='out'
 						initial={{ scaleX: 1 }}
 						animate={{ scaleX: 0 }}
 						exit={{ scaleX: 0 }}
-						transition={{ duration: 0.7, ease: [0.25, 0.1, 0.03, 0.99] }}
+						transition={{ duration: 0.5, ease: [0.25, 0.1, 0.03, 0.99] }}
 					></motion.div>
 				</main>
 			</motion.div>

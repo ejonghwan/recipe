@@ -2,14 +2,7 @@ import { Title } from '../text/Title';
 import styles from './Table.module.scss';
 import clsx from 'clsx';
 
-/* 
-  thead
-    (순번, 재료명, 재료량)
-  tbody 
-    tr(반복)
-    td()
 
-*/
 
 export function Table({ data, title }) {
 	if (data.length === 0) return;

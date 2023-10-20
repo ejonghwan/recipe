@@ -106,16 +106,24 @@ function Detail() {
 						<Pic imgSrc={data.strMealThumb} />
 					</div>
 
-					{/* 버튼 클릭시 Saved값이 true일떄만 모듈sass로 del 클래스명을 붙이고 해당 고유 클래스명은 atom컴포넌트로 상속됨 : 결과적으로 해당 클래스명의 스타일이 atom컴포넌트의 기본 style을 덮어쓰기 */}
-					<Btn onClick={handleSave} className={clsx(Saved && styles.del)}>
-						{Saved ? 'Remove from my Favoraite' : 'Add to my Favorait'}
-					</Btn>
+					<div className={clsx(styles.saved_wrap)}>
+						<Btn onClick={handleSave} className={clsx(Saved && styles.del, styles.savedBtn)}>
+							{Saved ? 'Remove from my Favoraite' : 'Add to my Favorait'}
+						</Btn>
+					</div>
+				
 					{Saved && (
 						<Text>You already added this recipe to your Favoraite.</Text>
 					)}
-					<Table data={TableData} title={data.strMeal} />
-
-					<List data={ListData} tag={'ol'} />
+					
+					<div className={clsx(styles.recipe_table_wrap)}>
+						<Table data={TableData} title={data.strMeal} />
+					</div>
+					<div className={clsx(styles.recipe_list_wrap)}>
+						<strong className={clsx(styles.recipe_list_title)}>How to cook</strong>
+						<List data={ListData} tag={'ol'}/>
+					</div>
+					
 				</>
 			)}
 		</section>

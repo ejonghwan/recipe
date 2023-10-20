@@ -12,7 +12,7 @@ function List({ style, className, data, url, tag = 'ul' }) {
 		{ className: clsx(styles.list, className), style: style },
 		//자식 요소 반복 출력 (li)
 		data.map((el, idx) => {
-			const child = tag === 'ol' ? `${idx + 1} : ${el}` : el;
+			const child = tag === 'ol' ? `${idx + 1}. ${el}` : el;
 			return React.createElement(
 				'li', //요소명
 				{ key: idx }, //props
