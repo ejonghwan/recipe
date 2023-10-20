@@ -18,7 +18,7 @@ function Footer() {
 				/>
 			</nav>
 			<Text type={'util'} style={{ letterSpacing: 2 }}>
-				2023 Decodelab All rights reserved.
+				2023 Jong Recipe All rights reserved.
 			</Text>
 		</footer>
 	);

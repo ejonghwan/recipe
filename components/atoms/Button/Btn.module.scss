@@ -3,7 +3,10 @@
 	background: transparent;
 	display: inline-block;
 	padding: 5px 10px;
-	border: 1px solid #666;
+	border-top: none;
+	border-left: none;
+	border-right: none;
+	border-bottom: 1px solid #262626;
 	font: 12px/1 'arial';
 	color: #bbb;
 	transition: 0.5s;
@@ -11,6 +14,6 @@
 	&:hover,
 	&.on {
 		color: var(--point);
-		border: 1px solid var(--point);
+		border-bottom: 1px solid var(--point);
 	}
 }
