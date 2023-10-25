@@ -53,7 +53,7 @@ NextJS, React-query, SASS
 ### 6-1. 메인
 <video src="https://github.com/ejonghwan/recipe/assets/53946298/1b295e2f-52ee-4ba8-94fb-6d1b01485348" width="50%" muted  autoplay loop></video>
 ##### 기능 설명
-* 메인은 SwiperJS를 활용하여 줌인, 줌아웃을 사용해 인터렉션을 넣었습니다.
+* 메인은 SwiperJS를 사용했고 줌인, 줌아웃을 어울리게 CSS로 인터렉션을 제작해서 넣었습니다.
 * 테마를 SASS 변수에 담아 사용자가 변경 시 한번에 변경되게 작업했습니다.
 * 메인 카테고리는 접속 시 일정 시간동안 한번씩 랜덤하게 API요청 하게끔 작업했습니다.
 
